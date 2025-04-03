@@ -1,4 +1,4 @@
-from metrics.classification import \
+from ._classification import \
     accuracy_score, \
     recall_score, \
     precision_score, \
