@@ -1,11 +1,11 @@
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score
+
 
 class Perceptron:
-    def __init__(self,*, theta0=None, eta=0.01, max_iter=100, fit_intercept=True):
+    def __init__(self,*, theta0=None, lr=0.01, max_iter=100, fit_intercept=True):
         self.theta = theta0
-        self.eta = eta
+        self.lr = lr
         self.max_iter = max_iter
         self.fit_intercept = fit_intercept
 
@@ -19,13 +19,13 @@ class Perceptron:
         if self.theta is None:
             self.theta = np.zeros(X.shape[1])
         
-        for epoch in range(self.max_iter):
+        for _ in range(self.max_iter):
             has_err = False
             for i in range(m):
                 y_pred = np.sign(self.theta @ X[i])
                 if y_pred != y[i]:
                     has_err = True
-                    self.theta += self.eta * (y[i] - y_pred) * X[i]
+                    self.theta += self.lr * (y[i] - y_pred) * X[i]
         
             if not has_err:
                 break

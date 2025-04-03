@@ -27,15 +27,10 @@ Repository này chứa các thuật toán Machine Learning được tự cài đ
 ## Ví dụ sử dụng
 
 ```python
-from algorithms.linear_models import LinearRegression
+from linear_model import LinearRegression
 
 model = LinearRegression()
 model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 ```
-
-## Tài liệu tham khảo
-
-- Scikit-learn documentation
-- Machine Learning cơ bản

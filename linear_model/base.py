@@ -1,7 +1,5 @@
 import numpy as np
-from matplotlib import pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score
+
 
 class LinearRegression:
     def __init__(self, fit_intercept=True):

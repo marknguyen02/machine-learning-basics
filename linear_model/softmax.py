@@ -1,8 +1,6 @@
 import numpy as np
+from sklearn.linear_model import LogisticRegression
 
-def softmax(Z):
-    exp_Z = np.exp(Z - np.max(Z, axis=1, keepdims=True))
-    return exp_Z / np.sum(exp_Z, axis=1, keepdims=True)
 
 class SoftmaxRegression():
     def __init__(self, *, W0=None, eta=0.01, eps=1e-4, max_iter=10000, penalty=None, c=1.0, l1_ratio=None, fit_intercept=True):
