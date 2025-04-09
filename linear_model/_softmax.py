@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.linear_model import LogisticRegression
+from ..utils.extmath import softmax
 
 
 class SoftmaxRegression():
@@ -15,9 +15,9 @@ class SoftmaxRegression():
                 
     def fit(self, X, y):
         m, _ = X.shape
-        cls = np.unique(y)
-        k = len(cls)
-        Y = np.eye(len(cls))[np.searchsorted(cls, y)]
+        labels = np.unique(y)
+        k = len(labels)
+        Y = np.eye(len(labels))[np.searchsorted(labels, y)]
 
         if self.penalty:
             if self.penalty == 'l1':
@@ -47,11 +47,9 @@ class SoftmaxRegression():
         for _ in range(self.max_iter):
             G = gradient()
             W_new = self.W - self.eta * G
-
+            self.W = W_new
             if np.linalg.norm(W_new - self.W) < self.eps:
                 break
-
-            self.W = W_new
 
     def predict(self, X):
         if self.fit_intercept:

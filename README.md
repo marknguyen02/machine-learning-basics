@@ -1,14 +1,13 @@
 # Machine Learning Basics
 
-Repository này chứa các thuật toán Machine Learning được tự cài đặt dựa trên thiết kế module của scikit-learn.
+This repository contains self-implemented Machine Learning algorithms based on the modular design of scikit-learn.
 
-## Mục đích
+## Purpose
 
-- Hiểu sâu cách hoạt động của các thuật toán ML thông qua việc tự cài đặt
-- Học cấu trúc API và thiết kế của scikit-learn
+- Gain a deeper understanding of how ML algorithms work by implementing them from scratch.
+- Learn the API structure and design principles of scikit-learn
 
-
-## Thuật toán
+## Algorithms
 
 - Linear Model
 - Tree-based Model
@@ -16,7 +15,7 @@ Repository này chứa các thuật toán Machine Learning được tự cài đ
 - Dimensionality Reduction
 - Neural Network
 
-## Ví dụ sử dụng
+## Usage Example
 
 ```python
 from linear_model import LinearRegression

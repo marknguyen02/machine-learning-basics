@@ -25,6 +25,8 @@ class KNeighborsClassifier:
 class KNeighborRegressor:
     def __init__(self, n_neighbors):
         self.k = n_neighbors
+        self.X_train = None
+        self.y_train = None
 
     def fit(self, X, y):
         self.X_train = X
