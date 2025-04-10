@@ -28,6 +28,7 @@ class SVC:
         self.degree = degree
         self.gamma = gamma
         self.coef0 = coef0
+        
         self.coef_ = None
         self.dual_coef_ = None
         self.intercept_ = None
@@ -51,14 +52,13 @@ class SVC:
         alpha = solve_quadratic_programming(K, X, y, self.C)
         self.support_ = np.where(alpha > self.tol)[0]        
         self.support_vectors_ = X[self.support_]
-        margin_idx = (alpha[self.support_] < self.C - self.tol)
+        margin = np.where((alpha > self.tol) & (alpha < self.C - self.tol))[0]        
         if self.kernel == 'linear':
             self.coef_ = alpha[self.support_] * y[self.support_] @ self.support_vectors_
-            self.intercept_ = np.mean(y[self.support_][margin_idx] - self.support_vectors_[margin_idx] @ self.coef_)
+            self.intercept_ = np.mean(y[margin] - X[margin] @ self.coef_)
         else:
             self.dual_coef_ = alpha[self.support_] * y[self.support_]
-            K_sv = K[self.support_][:, self.support_]
-            self.intercept_ = np.mean(y[self.support_][margin_idx] - (K_sv @ self.dual_coef_)[margin_idx])
+            self.intercept_ = np.mean(y[margin] - (K @ (alpha * y))[margin])
 
     def decision_function(self, X_test):
         if self.kernel == 'linear':
