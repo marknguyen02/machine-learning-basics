@@ -21,7 +21,7 @@ def solve_quadratic_programming(K, X, y, C):
 
 
 class SVC:
-    def __init__(self, *, C=1, kernel='linear', tol=1e-3, degree=3, coef0=1, gamma='scale'):
+    def __init__(self, *, C=1, kernel='linear', tol=1e-6, degree=3, coef0=0.0, gamma='scale'):
         self.kernel = kernel
         self.C = C
         self.tol = tol
@@ -44,21 +44,21 @@ class SVC:
         K = pairwise_kernel(
             X, 
             kernel=self.kernel,
-            gamma=self.gamma, 
-            degree=self.degree, 
+            gamma=self.gamma,
+            degree=self.degree,
             coef0=self.coef0
         )
         alpha = solve_quadratic_programming(K, X, y, self.C)
-        self.support_ = np.where(alpha > self.tol)[0]
-        self.support_vectors_ = X[self.support_, :]
-
+        self.support_ = np.where(alpha > self.tol)[0]        
+        self.support_vectors_ = X[self.support_]
+        margin_idx = (alpha[self.support_] < self.C - self.tol)
         if self.kernel == 'linear':
             self.coef_ = alpha[self.support_] * y[self.support_] @ self.support_vectors_
-            self.intercept_ = np.mean(y[self.support_] - self.support_vectors_ @ self.coef_)
+            self.intercept_ = np.mean(y[self.support_][margin_idx] - self.support_vectors_[margin_idx] @ self.coef_)
         else:
             self.dual_coef_ = alpha[self.support_] * y[self.support_]
-            K_sv = K[self.support_, self.support_] 
-            self.intercept_ = np.mean(y[self.support_] - K_sv @ self.dual_coef_)
+            K_sv = K[self.support_][:, self.support_]
+            self.intercept_ = np.mean(y[self.support_][margin_idx] - (K_sv @ self.dual_coef_)[margin_idx])
 
     def decision_function(self, X_test):
         if self.kernel == 'linear':
