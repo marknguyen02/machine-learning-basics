@@ -18,6 +18,7 @@ def pairwise_kernel(X1, X2=None, *, kernel='rbf', gamma, degree, coef0):
     m = X1.shape[0]
     n = X2.shape[0]
     K = np.empty((m, n))
+    
     for i in range(m):
         for j in range(n):
             K[i][j] = _kernel(X1[i, :], X2[j, :], kernel=kernel, gamma=gamma, degree=degree, coef0=coef0)
